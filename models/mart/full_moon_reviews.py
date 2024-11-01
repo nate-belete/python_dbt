@@ -12,6 +12,9 @@ def model(dbt, session: snowpark.Session):
     fct_reviews_pd = fct_reviews_df.to_pandas()
     full_moon_dates_pd = full_moon_dates_df.to_pandas()
 
+    fct_reviews_pd.columns = [col.lower() for col in fct_reviews_pd.columns]
+
+
     # Convert the review_date to datetime and adjust the full_moon_date
     fct_reviews_pd['review_date'] = pd.to_datetime(fct_reviews_pd['review_date']).dt.date
         # Assuming 'seed_full_moon_dates' has a single column 'full_moon_date'
@@ -34,5 +37,8 @@ def model(dbt, session: snowpark.Session):
 
     # Drop the 'full_moon_date' column as it's no longer needed
     result_pd.drop(columns=['FULL_MOON_DATE'], inplace=True)
+
+    result_pd.columns = [col.upper() for col in result_pd.columns]
+
 
     return result_pd

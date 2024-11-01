@@ -8,6 +8,8 @@ def model(dbt, session: snowpark.Session):
 
     # Convert to pandas DataFrame
     pandas_df = src_hosts_df.to_pandas()
+    pandas_df.columns = [col.lower() for col in pandas_df.columns]
+
 
     # Transform the data using pandas
     pandas_df['host_name'] = pandas_df['host_name'].fillna('Anonymous')
@@ -20,6 +22,8 @@ def model(dbt, session: snowpark.Session):
         'created_at',
         'updated_at'
     ]]
+
+    transformed_df.columns = [col.upper() for col in transformed_df.columns]
 
     # Return the transformed pandas DataFrame
     return transformed_df

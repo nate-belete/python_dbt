@@ -14,5 +14,7 @@ def model(dbt, session: snowpark.Session):
     pandas_df.columns = ['host_id', 'host_name', 'is_superhost',
                          'created_at' ,'updated_at'
                          ]
+    pandas_df.columns = [col.upper() for col in pandas_df.columns]
+
     
     return pandas_df

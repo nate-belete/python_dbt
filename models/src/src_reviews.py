@@ -14,5 +14,6 @@ def model(dbt, session: snowpark.Session):
     pandas_df.columns = ['listing_id', 'review_date', 'reviewer_name',
                          'review_text' ,'review_sentiment'
                          ]
-    
+    pandas_df.columns = [col.upper() for col in pandas_df.columns]
+
     return pandas_df

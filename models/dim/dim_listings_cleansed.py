@@ -8,6 +8,8 @@ def model(dbt, session: snowpark.Session):
 
     # Convert to pandas DataFrame
     pandas_df = src_listings_df.to_pandas()
+    pandas_df.columns = [col.lower() for col in pandas_df.columns]
+
 
     # Transform the data using pandas
     pandas_df['minimum_nights'] = pandas_df['minimum_nights'].apply(lambda x: 1 if x == 0 else x)
@@ -24,6 +26,7 @@ def model(dbt, session: snowpark.Session):
         'created_at',
         'updated_at'
     ]]
+    transformed_df.columns = [col.upper() for col in transformed_df.columns]
 
     # Return the transformed pandas DataFrame
     return transformed_df

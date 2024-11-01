@@ -15,5 +15,6 @@ def model(dbt, session: snowpark.Session):
                          'minimum_nights', 'host_id', 'price_str', 'created_at', 'updated_at'
                          ]
 
+    pandas_df.columns = [col.upper() for col in pandas_df.columns]
 
     return pandas_df
